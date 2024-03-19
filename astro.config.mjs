@@ -3,6 +3,8 @@ import tailwind from "@astrojs/tailwind";
 import vercelStatic from "@astrojs/vercel/static";
 import sitemap from "@astrojs/sitemap";
 import compressor from "astro-compressor";
+import vercel from '@astrojs/vercel/serverless';
+
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
@@ -16,10 +18,12 @@ export default defineConfig({
     sitemap(),
     compressor({ gzip: false, brotli: true }),
   ],
-  output: "static",
+  output: 'server',
   experimental: {
     clientPrerender: true,
     directRenderScript: true,
   },
-  adapter: vercelStatic(),
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  }),
 });
